@@ -8,7 +8,6 @@ Functions:
 - generate_html: Generates an HTML file by replacing placeholders in a
   template with formatted animal data.
 """
-import json
 import data_fetcher
 
 

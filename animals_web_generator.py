@@ -46,23 +46,28 @@ def serialize_animal(animal_obj):
     return output
 
 
-def create_animals_html(animals_data):
+def create_animals_html(animals_data, animal_name):
     """Fetches and formats animal data into HTML list item strings."""
 
     output = ""
-    for animal in animals_data:
-        output += serialize_animal(animal)
+
+    if animals_data != []:
+        for animal in animals_data:
+            output += serialize_animal(animal)
+
+    else:
+        output = f"""<h2>The animal "{animal_name}" doesn't exist.</h2>"""
 
     return output
 
 
-def generate_html(data):
+def generate_html(data, animal_name):
     """Generates an HTML file by replacing placeholders in a template with formatted animal data."""
 
     with open('animals_template.html', 'r', encoding="utf-8") as file:
         template = file.read()
 
-    template = template.replace("__REPLACE_ANIMALS_INFO__", create_animals_html(data))
+    template = template.replace("__REPLACE_ANIMALS_INFO__", create_animals_html(data, animal_name))
 
     with open('animals.html', 'w', encoding="utf-8") as file:
         file.write(template)
@@ -94,22 +99,23 @@ def main():
     data = get_animal_data(animal_name)
     skin_types = get_skin_types(data)
 
-    print("The following skin types are available:")
-    for skin_type in skin_types:
-        print(f"- {skin_type}")
+    if skin_types != []:
+        print("The following skin types are available:")
+        for skin_type in skin_types:
+            print(f"- {skin_type}")
 
-    # Filter for skin type
-    while True:
-        skin_type_input = input("\nSelect a skin type you want to filter for: ").strip()
+        # Filter for skin type
+        while True:
+            skin_type_input = input("\nSelect a skin type you want to filter for: ").strip()
 
-        if skin_type_input in skin_types:
-            break
+            if skin_type_input in skin_types:
+                break
 
-        print("Invalid skin type. Please try again.")
+            print("Invalid skin type. Please try again.")
 
-    filtered_data = filter_data(data, skin_type_input)
+        data = filter_data(data, skin_type_input)
 
-    generate_html(filtered_data)
+    generate_html(data, animal_name)
     print("Website was successfully generated to the file animals.html.")
 
 

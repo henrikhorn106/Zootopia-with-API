@@ -9,19 +9,7 @@ Functions:
   template with formatted animal data.
 """
 import json
-import requests
-
-
-def get_animal_data(animal_name):
-    """Gets animal data from the API."""
-
-    res = requests.get(
-        "https://api.api-ninjas.com/v1/animals",
-        params={"name": animal_name},
-        headers={'X-Api-Key': 'iS3F1u7/UlgFt343Rnq1ig==7gvCdHf7m4mRUgTJ'}
-    )
-
-    return res.json()
+import data_fetcher
 
 
 def serialize_animal(animal_obj):
@@ -96,7 +84,7 @@ def main():
     animal_name = input("Enter a name of an animal: ").strip()
 
     # Get skin type
-    data = get_animal_data(animal_name)
+    data = data_fetcher.fetch_data(animal_name)
     skin_types = get_skin_types(data)
 
     if skin_types != []:

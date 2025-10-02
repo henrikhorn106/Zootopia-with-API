@@ -88,9 +88,10 @@ def get_skin_types(data):
 
 def main():
     """Main function."""
+    animal_name = input("Enter a name of an animal: ").strip()
 
     # Get skin type
-    data = get_animal_data("fox")
+    data = get_animal_data(animal_name)
     skin_types = get_skin_types(data)
 
     print("The following skin types are available:")
@@ -109,6 +110,7 @@ def main():
     filtered_data = filter_data(data, skin_type_input)
 
     generate_html(filtered_data)
+    print("Website was successfully generated to the file animals.html.")
 
 
 if __name__ == "__main__":
